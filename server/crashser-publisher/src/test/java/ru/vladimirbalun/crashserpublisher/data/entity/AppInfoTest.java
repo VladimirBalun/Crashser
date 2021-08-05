@@ -11,7 +11,6 @@ public class AppInfoTest {
         final AppInfo appInfo = new AppInfo();
         assertThat("").isEqualTo(appInfo.getName());
         assertThat("").isEqualTo(appInfo.getVersion());
-        assertThat("").isEqualTo(appInfo.getProgrammingLanguage());
     }
 
     @Test
@@ -28,14 +27,6 @@ public class AppInfoTest {
         AppInfo appInfo = new AppInfo();
         appInfo.setVersion(version);
         assertThat(version).isEqualTo(appInfo.getVersion());
-    }
-
-    @Test
-    void whenSetValidProgrammingLanguageThenReturnValidProgrammingLanguage() {
-        final String programmingLanguage = "C++";
-        AppInfo appInfo = new AppInfo();
-        appInfo.setProgrammingLanguage(programmingLanguage);
-        assertThat(programmingLanguage).isEqualTo(appInfo.getProgrammingLanguage());
     }
 
 }
