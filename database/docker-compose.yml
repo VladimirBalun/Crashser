@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  crasher-database:
+    container_name: "crashser-database"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: crashser
+      MYSQL_USER: crashser_user
+      MYSQL_PASSWORD: 1234
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+
+volumes:
+  container-volume:
