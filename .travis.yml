@@ -1,0 +1,15 @@
+sudo: required
+
+fail_fast: true
+
+language: java
+
+jdk:
+  - openjdk-ea
+
+script:
+  - cd server/crashser-publisher
+  - mvn -e install -DskipTests
+
+os:
+  - linux
