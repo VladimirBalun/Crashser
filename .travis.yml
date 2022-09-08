@@ -1,15 +1,22 @@
-sudo: required
+dist: ubuntu
 
-fail_fast: true
+language: go
 
-language: java
+go:
+- "1.19.x"
 
-jdk:
-  - openjdk-ea
+env:
+  - GO111MODULE=on
+
+before_install:
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.49.0
+  - cd server
+
+install: 
+  - go mod tidy
 
 script:
-  - cd server/crashser-publisher
-  - mvn -e install -DskipTests
+  - go build -o bin/crasher cmd/crasher/main.go
+  - go test -v -race ./...
+  - golangci-lint run ./...
 
-os:
-  - linux

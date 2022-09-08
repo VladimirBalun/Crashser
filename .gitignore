@@ -1,2 +1,3 @@
 server/.idea
 server/go.sum
+server/bin
