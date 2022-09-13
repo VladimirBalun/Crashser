@@ -16,7 +16,5 @@ install:
   - go mod tidy
 
 script:
-  - go build -o bin/crasher cmd/crasher/main.go
-  - go test -v -race ./...
-  - golangci-lint run ./...
+  - make all
 

@@ -10,35 +10,35 @@ const (
 )
 
 type AppInfo struct {
-	name                string
-	version             string
-	programmingLanguage ProgrammingLanguage
+	Name                string              `bson:"name,omitempty"`
+	Version             string              `bson:"version,omitempty"`
+	ProgrammingLanguage ProgrammingLanguage `bson:"programming_language,omitempty"`
 }
 
 func NewAppInfo() *AppInfo {
 	return &AppInfo{}
 }
 
-func (app *AppInfo) Name() string {
-	return app.name
+func (app *AppInfo) GetName() string {
+	return app.Name
 }
 
-func (app *AppInfo) Version() string {
-	return app.version
+func (app *AppInfo) GetVersion() string {
+	return app.Version
 }
 
-func (app *AppInfo) ProgrammingLanguage() ProgrammingLanguage {
-	return app.programmingLanguage
+func (app *AppInfo) GetProgrammingLanguage() ProgrammingLanguage {
+	return app.ProgrammingLanguage
 }
 
 func (app *AppInfo) SetName(name string) {
-	app.name = name
+	app.Name = name
 }
 
 func (app *AppInfo) SetVersion(version string) {
-	app.version = version
+	app.Version = version
 }
 
 func (app *AppInfo) SetProgrammingLanguage(language ProgrammingLanguage) {
-	app.programmingLanguage = language
+	app.ProgrammingLanguage = language
 }

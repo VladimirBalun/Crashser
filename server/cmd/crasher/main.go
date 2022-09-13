@@ -44,9 +44,8 @@ func main() {
 			)
 		}
 	}()
-
-	appsRepo := mongodb_repositories.NewApplicationsRepository(dbClient, logger)
-	coreDumpsRepo := mongodb_repositories.NewCoreDumpsRepository(dbClient, logger)
+	appsRepo := mongodb_repository.NewApplicationsRepository(dbClient, logger)
+	coreDumpsRepo := mongodb_repository.NewCoreDumpsRepository(dbClient, logger)
 
 	appsService := services.NewApplicationsService(appsRepo, logger)
 	coreDumpsService := services.NewCoreDumpsService(coreDumpsRepo, logger)

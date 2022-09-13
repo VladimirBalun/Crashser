@@ -9,9 +9,9 @@ import (
 
 func TestOSInfo(t *testing.T) {
 	osInfo := NewOSInfo()
-	require.Equal(t, 0, len(osInfo.Name()))
-	require.Equal(t, 0, len(osInfo.Version()))
-	require.Equal(t, 0, len(osInfo.Architecture()))
+	require.Equal(t, 0, len(osInfo.GetName()))
+	require.Equal(t, 0, len(osInfo.GetVersion()))
+	require.Equal(t, 0, len(osInfo.GetArchitecture()))
 
 	name := "windows"
 	version := "10"
@@ -21,7 +21,7 @@ func TestOSInfo(t *testing.T) {
 	osInfo.SetVersion(version)
 	osInfo.SetArchitecture(architecture)
 
-	assert.Equal(t, name, osInfo.Name())
-	assert.Equal(t, version, osInfo.Version())
-	assert.Equal(t, architecture, osInfo.Architecture())
+	assert.Equal(t, name, osInfo.GetName())
+	assert.Equal(t, version, osInfo.GetVersion())
+	assert.Equal(t, architecture, osInfo.GetArchitecture())
 }
