@@ -1,3 +1,5 @@
 server/.idea
-server/go.sum
 server/bin
+
+web/.idea
+web/node_modules
