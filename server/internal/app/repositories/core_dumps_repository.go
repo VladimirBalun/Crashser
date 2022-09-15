@@ -5,7 +5,8 @@ import (
 )
 
 type CoreDumpsRepository interface {
-	GetCoreDumps() ([]entities.CoreDump, error)
+	GetCoreDumps(setters ...entities.OptionsMongo) ([]entities.CoreDump, error)
 	AddCoreDump(coreDump entities.CoreDump) error
 	DeleteCoreDump(id string) error
+	DeleteAllCoreDumps() error
 }

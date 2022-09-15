@@ -16,12 +16,18 @@ const (
 )
 
 type CoreDump struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty"`
-	OsInfo    *OSInfo            `bson:"os_info,omitempty"`
-	AppInfo   *AppInfo           `bson:"app_info,omitempty"`
-	Status    CoreDumpStatus     `bson:"status,omitempty"`
-	Data      string             `bson:"data,omitempty"`
-	Timestamp time.Time          `bson:"timestamp,omitempty"`
+	ID         primitive.ObjectID
+	OsInfo     *OSInfo
+	AppInfo    *AppInfo
+	Status     CoreDumpStatus
+	Data       string
+	Timestamp  time.Time
+	Extensions []Extensions
+}
+
+type Extensions struct {
+	Key   string
+	Value string
 }
 
 func NewCoreDump() *CoreDump {

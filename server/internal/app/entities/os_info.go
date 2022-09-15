@@ -1,9 +1,9 @@
 package entities
 
 type OSInfo struct {
-	Name         string `bson:"name,omitempty"`
-	Version      string `bson:"version,omitempty"`
-	Architecture string `bson:"architecture,omitempty"`
+	Name         string 
+	Version      string 
+	Architecture string 
 }
 
 func NewOSInfo() *OSInfo {

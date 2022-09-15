@@ -41,6 +41,15 @@ func Test_AddCoreDump(t *testing.T) {
 			},
 			error: errors.New("error adding core dump"),
 		},
+		{
+			name: "timeout",
+			dump: entities.CoreDump{},
+			stubs: func(r *mock_repositories.MockCoreDumpsRepository, dump entities.CoreDump) {
+				r.EXPECT().AddCoreDump(dump).Return(errors.New("timeout"))
+
+			},
+			error: errors.New("timeout"),
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

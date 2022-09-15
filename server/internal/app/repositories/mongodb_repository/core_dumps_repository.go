@@ -2,15 +2,14 @@ package mongodb_repository
 
 import (
 	"context"
-	"server/internal/app"
 	"server/internal/app/entities"
 	"server/internal/app/repositories"
-	"strconv"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
 )
 
@@ -23,20 +22,9 @@ type CoreDumpsRepository struct {
 
 var _ repositories.CoreDumpsRepository = (*CoreDumpsRepository)(nil)
 
-func NewCoreDumpsRepository(db *mongo.Client, l *zap.Logger) *CoreDumpsRepository {
+func NewCoreDumpsRepository(ctx context.Context, db *mongo.Client, l *zap.Logger) *CoreDumpsRepository {
 	mongoDB := db.Database("crasher")
 	collection := mongoDB.Collection("coredumps")
-
-	ctxTimeout, err := strconv.Atoi(app.CtxTimeout)
-	if err != nil {
-		l.Fatal(
-			"failed to convert context timeout to number",
-			zap.Error(err),
-		)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(ctxTimeout)*time.Second)
-	defer cancel()
-
 	return &CoreDumpsRepository{
 		ctx:        ctx,
 		dbClient:   db,
@@ -45,9 +33,23 @@ func NewCoreDumpsRepository(db *mongo.Client, l *zap.Logger) *CoreDumpsRepositor
 	}
 }
 
-func (r *CoreDumpsRepository) GetCoreDumps() ([]entities.CoreDump, error) {
+func (r *CoreDumpsRepository) GetCoreDumps(setters ...entities.OptionsMongo) ([]entities.CoreDump, error) {
+	options := options.Find()
+	filter := bson.M{}
+	for _, setter := range setters {
+		setter(filter, options)
+	}
 	var result []entities.CoreDump
-	cur, err := r.collection.Find(r.ctx, bson.D{})
+
+	timeout, err := ParseCtxTimeoutEnv()
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
+	defer cancel()
+
+	cur, err := r.collection.Find(ctx, filter)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +58,14 @@ func (r *CoreDumpsRepository) GetCoreDumps() ([]entities.CoreDump, error) {
 }
 
 func (r *CoreDumpsRepository) AddCoreDump(coreDump entities.CoreDump) error {
-	_, err := r.collection.InsertOne(r.ctx, coreDump)
+	timeout, err := ParseCtxTimeoutEnv()
+	if err != nil {
+		return err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
+	defer cancel()
+
+	_, err = r.collection.InsertOne(ctx, coreDump)
 	return err
 }
 
@@ -65,6 +74,25 @@ func (r *CoreDumpsRepository) DeleteCoreDump(id string) error {
 	if err != nil {
 		return err
 	}
-	_, err = r.collection.DeleteOne(r.ctx, bson.D{{Key: "_id", Value: idHex}})
+	timeout, err := ParseCtxTimeoutEnv()
+	if err != nil {
+		return  err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
+	defer cancel()
+
+	_, err = r.collection.DeleteOne(ctx, bson.D{{Key: "_id", Value: idHex}})
+	return err
+}
+
+func (r *CoreDumpsRepository) DeleteAllCoreDumps() error {
+	timeout, err := ParseCtxTimeoutEnv()
+	if err != nil {
+		return  err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
+	defer cancel()
+	
+	_, err = r.collection.DeleteMany(ctx, bson.D{})
 	return err
 }
