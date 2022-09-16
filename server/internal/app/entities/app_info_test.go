@@ -9,9 +9,9 @@ import (
 
 func TestAppInfo(t *testing.T) {
 	appInfo := NewAppInfo()
-	require.Equal(t, 0, len(appInfo.Name()))
-	require.Equal(t, 0, len(appInfo.Version()))
-	require.Equal(t, UnknownProgrammingLanguage, appInfo.ProgrammingLanguage())
+	require.Equal(t, 0, len(appInfo.GetName()))
+	require.Equal(t, 0, len(appInfo.GetVersion()))
+	require.Equal(t, UnknownProgrammingLanguage, appInfo.GetProgrammingLanguage())
 
 	name := "publisher-app"
 	version := "v0.0.1"
@@ -21,7 +21,7 @@ func TestAppInfo(t *testing.T) {
 	appInfo.SetVersion(version)
 	appInfo.SetProgrammingLanguage(language)
 
-	assert.Equal(t, name, appInfo.Name())
-	assert.Equal(t, version, appInfo.Version())
-	assert.Equal(t, language, appInfo.ProgrammingLanguage())
+	assert.Equal(t, name, appInfo.GetName())
+	assert.Equal(t, version, appInfo.GetVersion())
+	assert.Equal(t, language, appInfo.GetProgrammingLanguage())
 }

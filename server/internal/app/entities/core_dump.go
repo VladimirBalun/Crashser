@@ -1,6 +1,10 @@
 package entities
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type CoreDumpStatus int
 
@@ -12,53 +16,60 @@ const (
 )
 
 type CoreDump struct {
-	osInfo    *OSInfo
-	appInfo   *AppInfo
-	status    CoreDumpStatus
-	data      string
-	timestamp time.Time
+	ID         primitive.ObjectID
+	OsInfo     *OSInfo
+	AppInfo    *AppInfo
+	Status     CoreDumpStatus
+	Data       string
+	Timestamp  time.Time
+	Extensions []Extensions
+}
+
+type Extensions struct {
+	Key   string
+	Value string
 }
 
 func NewCoreDump() *CoreDump {
 	return &CoreDump{}
 }
 
-func (c *CoreDump) OSInfo() *OSInfo {
-	return c.osInfo
+func (c *CoreDump) GetOSInfo() *OSInfo {
+	return c.OsInfo
 }
 
-func (c *CoreDump) AppInfo() *AppInfo {
-	return c.appInfo
+func (c *CoreDump) GetAppInfo() *AppInfo {
+	return c.AppInfo
 }
 
-func (c *CoreDump) Status() CoreDumpStatus {
-	return c.status
+func (c *CoreDump) GetStatus() CoreDumpStatus {
+	return c.Status
 }
 
-func (c *CoreDump) Data() string {
-	return c.data
+func (c *CoreDump) GetData() string {
+	return c.Data
 }
 
-func (c *CoreDump) Timestamp() time.Time {
-	return c.timestamp
+func (c *CoreDump) GetTimestamp() time.Time {
+	return c.Timestamp
 }
 
 func (c *CoreDump) SetOSInfo(info *OSInfo) {
-	c.osInfo = info
+	c.OsInfo = info
 }
 
 func (c *CoreDump) SetAppInfo(info *AppInfo) {
-	c.appInfo = info
+	c.AppInfo = info
 }
 
 func (c *CoreDump) SetStatus(status CoreDumpStatus) {
-	c.status = status
+	c.Status = status
 }
 
 func (c *CoreDump) SetData(data string) {
-	c.data = data
+	c.Data = data
 }
 
 func (c *CoreDump) SetTimestamp(timestamp time.Time) {
-	c.timestamp = timestamp
+	c.Timestamp = timestamp
 }

@@ -1,35 +1,35 @@
 package entities
 
 type OSInfo struct {
-	name         string
-	version      string
-	architecture string
+	Name         string 
+	Version      string 
+	Architecture string 
 }
 
 func NewOSInfo() *OSInfo {
 	return &OSInfo{}
 }
 
-func (os *OSInfo) Name() string {
-	return os.name
+func (os *OSInfo) GetName() string {
+	return os.Name
 }
 
-func (os *OSInfo) Version() string {
-	return os.version
+func (os *OSInfo) GetVersion() string {
+	return os.Version
 }
 
-func (os *OSInfo) Architecture() string {
-	return os.architecture
+func (os *OSInfo) GetArchitecture() string {
+	return os.Architecture
 }
 
 func (os *OSInfo) SetName(name string) {
-	os.name = name
+	os.Name = name
 }
 
 func (os *OSInfo) SetVersion(version string) {
-	os.version = version
+	os.Version = version
 }
 
 func (os *OSInfo) SetArchitecture(architecture string) {
-	os.architecture = architecture
+	os.Architecture = architecture
 }

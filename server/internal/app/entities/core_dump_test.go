@@ -10,11 +10,11 @@ import (
 
 func TestCoreDump(t *testing.T) {
 	coreDump := NewCoreDump()
-	require.Nil(t, coreDump.OSInfo())
-	require.Nil(t, coreDump.AppInfo())
-	require.Equal(t, ToDoCoreDumpStatus, coreDump.Status())
-	require.Equal(t, time.Time{}, coreDump.Timestamp())
-	require.Equal(t, 0, len(coreDump.Data()))
+	require.Nil(t, coreDump.GetOSInfo())
+	require.Nil(t, coreDump.GetAppInfo())
+	require.Equal(t, ToDoCoreDumpStatus, coreDump.GetStatus())
+	require.Equal(t, time.Time{}, coreDump.GetTimestamp())
+	require.Equal(t, 0, len(coreDump.GetData()))
 
 	osInfo := NewOSInfo()
 	appInfo := NewAppInfo()
@@ -28,9 +28,9 @@ func TestCoreDump(t *testing.T) {
 	coreDump.SetStatus(status)
 	coreDump.SetData(data)
 
-	assert.Equal(t, osInfo, coreDump.OSInfo())
-	assert.Equal(t, appInfo, coreDump.AppInfo())
-	assert.Equal(t, timestamp, coreDump.Timestamp())
-	assert.Equal(t, status, coreDump.Status())
-	assert.Equal(t, data, coreDump.Data())
+	assert.Equal(t, osInfo, coreDump.GetOSInfo())
+	assert.Equal(t, appInfo, coreDump.GetAppInfo())
+	assert.Equal(t, timestamp, coreDump.GetTimestamp())
+	assert.Equal(t, status, coreDump.GetStatus())
+	assert.Equal(t, data, coreDump.GetData())
 }
